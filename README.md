@@ -50,4 +50,4 @@ Reduce the dimensionality of the extracted features by selecting the most releva
 
 # Reminders
 - Final Report: The report should be in NeurIPS format, minimum of 6 pages, no maximum number of pages.
-- Presentation: Timeline
+- Presentation: Timeline, slides
