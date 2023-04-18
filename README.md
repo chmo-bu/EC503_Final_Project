@@ -1,5 +1,4 @@
-# EC503_Final_Project 
-# BCI-EC503
+# EC503_Final_Project BCI iv 2a
 
 # Background
 
@@ -8,8 +7,6 @@ BCI (Brain-Computer Interface) competitions are organized events where researche
 The BCI Competition IV, held in 2008, was the fourth such competition. It consisted of several datasets, each representing a different problem in BCI research. Dataset 2a was focused on **motor imagery classification**, which is an important area of BCI research.
 
 In this dataset, participants were asked to develop algorithms to classify motor imagery-related EEG (Electroencephalography) signals. Specifically, the dataset consisted of EEG recordings from nine subjects, who performed four different motor imagery tasks: imagining the movement of the left hand, right hand, both feet, and the tongue. The goal was to develop algorithms that could accurately differentiate between these four imagined movements based on the EEG data.
-
-[data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2730%27%20height=%2730%27/%3e](data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2730%27%20height=%2730%27/%3e)
 
 # Tasks:
 
@@ -45,3 +42,8 @@ Reduce the dimensionality of the extracted features by selecting the most releva
 - Experiment with different feature extraction methods, feature selection techniques, or classifiers to find the best combination for your specific problem.
 
 # References
+[https://github.com/bregydoc/bcidatasetIV2a](https://github.com/bregydoc/bcidatasetIV2a)
+
+[https://github.com/MultiScale-BCI/IV-2a](https://github.com/MultiScale-BCI/IV-2a)
+
+[https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf](https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf)
