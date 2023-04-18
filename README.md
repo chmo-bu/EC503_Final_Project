@@ -42,11 +42,11 @@ Reduce the dimensionality of the extracted features by selecting the most releva
 - Experiment with different feature extraction methods, feature selection techniques, or classifiers to find the best combination for your specific problem.
 
 # References
-[https://github.com/bregydoc/bcidatasetIV2a](https://github.com/bregydoc/bcidatasetIV2a)
+BCI Competition Dataset IV 2a for python and numpy: [https://github.com/bregydoc/bcidatasetIV2a](https://github.com/bregydoc/bcidatasetIV2a)
 
-[https://github.com/MultiScale-BCI/IV-2a](https://github.com/MultiScale-BCI/IV-2a)
+Large Multiscale Temporal and Spectral Features: [https://github.com/MultiScale-BCI/IV-2a](https://github.com/MultiScale-BCI/IV-2a)
 
-[https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf](https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf)
+Convolutional Neural Networks: [https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf](https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf)
 
 Preprocessing dataset using MATLAB: https://github.com/EdgarMoyete/Preprocesamiento-BCI-IV-2a
 
