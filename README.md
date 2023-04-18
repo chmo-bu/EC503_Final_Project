@@ -47,3 +47,7 @@ Reduce the dimensionality of the extracted features by selecting the most releva
 [https://github.com/MultiScale-BCI/IV-2a](https://github.com/MultiScale-BCI/IV-2a)
 
 [https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf](https://arxiv.org/ftp/arxiv/papers/2112/2112.07208.pdf)
+
+# Reminders
+- Final Report: The report should be in NeurIPS format, minimum of 6 pages, no maximum number of pages.
+- Presentation: Timeline
