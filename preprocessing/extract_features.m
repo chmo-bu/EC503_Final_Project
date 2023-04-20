@@ -1,6 +1,21 @@
 load data/A01T.mat;
 
-res = extract_time_features(data);
+% get directories with '.gdf' files
+%paths = dir('../BCICIV_2a_gdf/*.gdf');
+paths = dir('data/*.mat');
+
+% for each set preprocess data
+for i=1:size(paths,1)
+    disp(paths(i).name);
+    name = split(paths(i).name, '.');
+    name = name{1};
+    name = strcat('time_features/', name, '.mat');
+    load(strcat('data/', paths(i).name));
+    data = extract_time_features(data);
+    save(name, "data");
+end
+
+%res = extract_time_features(data);
 
 %{
 TODO: time-domain features
@@ -33,6 +48,7 @@ function [features] = extract_time_features(X)
     end
 
     features.zc = squeeze(features.zc);
+    features.ac = reshape(features.ac, m, C*s);
 
     % output size [m, # seconds]
 end
