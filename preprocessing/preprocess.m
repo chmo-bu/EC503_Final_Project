@@ -9,6 +9,7 @@ for i=1:size(paths,1)
     data = ReplaceNans(data);
     data = CenterData(data);
     data = BandPass(data);
+    data = FormatData(data);
     name = split(paths(i).name, '.');
     name = name{1};
     name = strcat('data/', name, '.mat');
@@ -63,8 +64,10 @@ function [output] = resample(pathname)
     % load data
     [s, h] = sload(pathname); 
     
+    numsec = 4;
+
     % allocate output array
-    output = zeros(288000, 22);
+    output = zeros(288*250*numsec, 22);
     
     for columna=1:22 % 22 eeg channels
 	    contador = 1;
@@ -73,5 +76,35 @@ function [output] = resample(pathname)
             output(contador:contador+999, columna) = s(h.TRIG(i)+500 : h.TRIG(i)+1499, columna);
             contador = contador + 1000;
         end
+    end
+end
+
+function [output] = FormatData(data)
+    output = zeros(288,22000);
+    contador2 = 1;
+    
+    for i=1:288
+        contador1=1;
+        for j=1:22
+            output(i, contador1:contador1+999)...
+                = data(contador2:contador2+999, j);
+            contador1 = contador1 + 1000;
+        end
+        contador2 = contador2 + 1000;
+    end
+end
+
+function [output] = FormatLaplace(data)
+    output = zeros(288,2000);
+    contador2 = 1;
+    
+    for i=1:288
+        contador1=1;
+        for j=1:2
+            output(i, contador1:contador1+999)...
+                = data(contador2:contador2+999, j);
+            contador1 = contador1 + 1000;
+        end
+        contador2 = contador2 + 1000;
     end
 end
