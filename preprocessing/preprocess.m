@@ -1,8 +1,23 @@
+%{
+Adapted from: Adapted from https://github.com/EdgarMoyete/Preprocesamiento-BCI-IV-2a
+
+Summary:
+
+Preprocesses data by extracting the 22 EEG channels, replacing NaNs with
+channel-wise medians, mean-centering, bandpassing between 8 and 30 Hz, and
+reshaping the data into [# samples, (# channels) * (# seconds) * (sample
+frequency)] dimensional matrix.
+
+%}
+
+% clear console and variable workspace
 clear;
 clc;
 
+% get directories with '.gdf' files
 paths = dir('../BCICIV_2a_gdf/*.gdf');
 
+% for each set preprocess data
 for i=1:size(paths,1)
     disp(paths(i).name);
     data = resample(strcat('../BCICIV_2a_gdf/', paths(i).name));
@@ -16,11 +31,13 @@ for i=1:size(paths,1)
     save(name, "data");
 end
 
+% bandpass between 8 and 30 Hz
 function [output] = BandPass(data)
     fs = 250;
     output = bandpass(data, [8 30], fs);
 end
 
+% laplacian filter across each channel
 function [output] = LaplacianFilter(data)
     c3_vecinos = [data(:, 2) data(:, 7) ...
         data(:, 9) data(:, 14)];
@@ -33,11 +50,13 @@ function [output] = LaplacianFilter(data)
     output = [c3_laplace c4_laplace];
 end
 
+% subtract channel-wise average
 function [output] = CenterData(data)
     avg = mean(data, 2);
     output = data - avg;
 end
 
+% replace NaNs with channel-wise median
 function [output] = ReplaceNans(data)
     output = zeros(size(data));
     contador = 1;
@@ -60,6 +79,7 @@ function [output] = ReplaceNans(data)
     end    
 end
 
+% get 4-second sample from each data point
 function [output] = resample(pathname)
     % load data
     [s, h] = sload(pathname); 
@@ -79,6 +99,7 @@ function [output] = resample(pathname)
     end
 end
 
+% reshape data
 function [output] = FormatData(data)
     output = zeros(288,22000);
     contador2 = 1;
@@ -94,6 +115,7 @@ function [output] = FormatData(data)
     end
 end
 
+% reshape for laplacian
 function [output] = FormatLaplace(data)
     output = zeros(288,2000);
     contador2 = 1;
