@@ -4,15 +4,28 @@ load data/A01T.mat;
 %paths = dir('../BCICIV_2a_gdf/*.gdf');
 paths = dir('data/*.mat');
 
+
 % for each set preprocess data
 for i=1:size(paths,1)
     disp(paths(i).name);
     name = split(paths(i).name, '.');
     name = name{1};
-    name = strcat('time_features/', name, '.mat');
+    name = strcat('features/', name, '.mat');
     load(strcat('data/', paths(i).name));
-    data = extract_time_features(data);
-    save(name, "data");
+    
+    % Extract features
+    time_features = extract_time_features(data);
+    freq_features = extract_frequency_features(data);
+    tf_features = extract_time_frequency_features(data);
+    
+    % Combine features into one struct
+    all_features = struct;
+    all_features.time = time_features;
+    all_features.frequency = freq_features;
+    all_features.time_frequency = tf_features;
+    
+    % Save the combined features
+    save(name, "all_features");
 end
 
 %res = extract_time_features(data);
@@ -57,9 +70,72 @@ end
 TODO: frequency-domain features
 %}
 
+function [freq_features] = extract_frequency_features(X)
+    freq_features = struct;
+    
+    m = size(X, 1);
+    C = 22;
+    s = 1000;
+    
+    X_prime = reshape(X, m, s, C);
+    
+    freq_features.peak_freq = zeros(m, 1, C);
+    freq_features.mean_freq = zeros(m, 1, C);
+    freq_features.median_freq = zeros(m, 1, C);
+    freq_features.bandpower = zeros(m, 5, C);
+    
+    for i = 1:m
+        for j = 1:C
+            [pxx, f] = pwelch(X_prime(i, :, j), [], [], [], s);
+            
+            [~, idx] = max(pxx);
+            freq_features.peak_freq(i, 1, j) = f(idx);
+            freq_features.mean_freq(i, 1, j) = sum(pxx .* f) / sum(pxx);
+            freq_features.median_freq(i, 1, j) = f(find(cumsum(pxx) >= sum(pxx) / 2, 1));
+            
+            freq_bands = [1 4; 4 8; 8 12; 12 30; 30 100]; % Modify these frequency bands as needed
+            for k = 1:size(freq_bands, 1)
+                freq_features.bandpower(i, k, j) = bandpower(pxx, f, freq_bands(k, :), 'psd');
+            end
+        end
+    end
+    
+    freq_features.peak_freq = squeeze(freq_features.peak_freq);
+    freq_features.mean_freq = squeeze(freq_features.mean_freq);
+    freq_features.median_freq = squeeze(freq_features.median_freq);
+end
+
+
+
 %{
 TODO: time-frequency features
 %}
+
+function [tf_features] = extract_time_frequency_features(X)
+    tf_features = struct;
+
+    m = size(X, 1);
+    C = 22;
+    s = 1000;
+
+    X_prime = reshape(X, m, s, C);
+
+    window_len = 100; % You can adjust this value based on your requirements
+    overlap_len = 50; % You can adjust this value based on your requirements
+    nfft = 256; % You can adjust this value based on your requirements
+
+    tf_features.stft = zeros(m, nfft/2 + 1, C);
+
+    for i = 1:m
+        for j = 1:C
+            [sxx, ~, ~] = spectrogram(X_prime(i, :, j), window_len, overlap_len, nfft, s);
+            tf_features.stft(i, :, j) = mean(abs(sxx), 2);
+        end
+    end
+
+    tf_features.stft = squeeze(tf_features.stft);
+end
+
 
 %{
 TODO: spatial features
