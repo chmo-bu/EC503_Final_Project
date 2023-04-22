@@ -4,6 +4,10 @@ load data/A01T.mat;
 %paths = dir('../BCICIV_2a_gdf/*.gdf');
 paths = dir('data/*.mat');
 
+% check for features path
+if ~exist('./features', 'dir')
+       mkdir('./features')
+end
 
 % for each set preprocess data
 for i=1:size(paths,1)
