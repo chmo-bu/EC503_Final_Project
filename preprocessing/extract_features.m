@@ -1,4 +1,4 @@
-load data/A01T.mat;
+%load data/A01T.mat;
 
 % get directories with '.gdf' files
 %paths = dir('../BCICIV_2a_gdf/*.gdf');
