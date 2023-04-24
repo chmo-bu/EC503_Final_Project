@@ -1,6 +1,8 @@
 % Load the training data and labels
 load('training.mat');
-load('training_labels.mat');
+load('test.mat');
+
+%load('training_labels.mat');
 
 % check for features path
 if ~exist('./features', 'dir')
@@ -13,15 +15,26 @@ freq_features = extract_frequency_features(training);
 tf_features = extract_time_frequency_features(training);
 
 % Combine features into one struct
-all_features = struct;
-all_features.time = time_features;
-all_features.frequency = freq_features;
-all_features.time_frequency = tf_features;
+train_features = struct;
+train_features.time = time_features;
+train_features.frequency = freq_features;
+train_features.time_frequency = tf_features;
 
 % Save the combined features
-save('features/training_features.mat', "all_features");
+save('features/training_features.mat', "train_features");
 
-%res = extract_time_features(data);
+% Extract features
+time_features = extract_time_features(data);
+freq_features = extract_frequency_features(data);
+tf_features = extract_time_frequency_features(data);
+
+% Combine features into one struct
+test_features = struct;
+test_features.time = time_features;
+test_features.frequency = freq_features;
+test_features.time_frequency = tf_features;
+
+save('features/testing_features.mat', "test_features");
 
 %{
 TODO: time-domain features

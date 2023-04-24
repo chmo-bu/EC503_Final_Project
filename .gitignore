@@ -1,3 +1,5 @@
 biosig-2.5.0-Windows-64bit
 matlab
 BCICIV_2a_gdf
+*.mat
+*.zip
