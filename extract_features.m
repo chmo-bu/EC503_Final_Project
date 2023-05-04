@@ -126,9 +126,9 @@ function [tf_features] = extract_time_frequency_features(X)
 
     X_prime = reshape(X, m, s, C);
 
-    window_len = 100; % You can adjust this value based on your requirements
-    overlap_len = 50; % You can adjust this value based on your requirements
-    nfft = 256; % You can adjust this value based on your requirements
+    window_len = 100; % adjust this value
+    overlap_len = 50;
+    nfft = 256;
 
     tf_features.stft = zeros(m, nfft/2 + 1, C);
 
